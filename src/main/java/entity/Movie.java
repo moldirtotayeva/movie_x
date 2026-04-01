@@ -5,6 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,6 +25,10 @@ public class Movie {
     private Integer year;
     private Double rating;
     private Integer count;
+
+    @OneToMany(mappedBy = "movie")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private List<Director> directors = new ArrayList<>();
 
     @Override
     public String toString() {
