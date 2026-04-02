@@ -26,8 +26,19 @@ public class Movie {
     private Double rating;
     private Integer count;
 
-    @OneToMany(mappedBy = "movie")
+    @ManyToMany
+    @JoinTable(name = "movie_to_genre",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id"))
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private List<Genre> genres = new ArrayList<>();
+
+    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY, orphanRemoval = true)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private List<Actor> actors = new ArrayList<>();
+
+    @OneToMany(mappedBy = "movie")
+    @Cascade({org.hibernate.annotations.CascadeType.ALL})
     private List<Director> directors = new ArrayList<>();
 
     @Override
